@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قياس قوة كلمة السر</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: center;
+            margin: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+        .strength {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .weak {
+            color: red;
+        }
+        .medium {
+            color: orange;
+        }
+        .strong {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>قياس قوة كلمة السر</h1>
+    <input type="password" id="password" placeholder="أدخل كلمة السر" oninput="checkPasswordStrength()">
+    <div id="strength" class="strength">قوة كلمة السر ستظهر هنا</div>
+
+    <script>
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthElement = document.getElementById('strength');
+
+            if (password.length === 0) {
+                strengthElement.textContent = "قوة كلمة السر ستظهر هنا";
+                strengthElement.className = "strength";
+                return;
+            }
+
+            // حساب قوة كلمة السر
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[@$!%*?&#]/.test(password)) strength++;
+
+            // تحديد القوة بناءً على المجموع
+            if (strength <= 2) {
+                strengthElement.textContent = "كلمة السر ضعيفة";
+                strengthElement.className = "strength weak";
+            } else if (strength === 3 || strength === 4) {
+                strengthElement.textContent = "كلمة السر متوسطة";
+                strengthElement.className = "strength medium";
+            } else {
+                strengthElement.textContent = "كلمة السر قوية";
+                strengthElement.className = "strength strong";
+            }
+        }
+    </script>
+</body>
+</html>
